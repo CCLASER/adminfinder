@@ -31,11 +31,32 @@ def findAdmin():
 
 def Credit():
 	Space(9); print "#####################################"
-	Space(9); print "#   *** Admin Page Finder ***   #"
-	Space(9); print "#    Author : Dalpan  #"
-	Space(9); print "#    Email: dalpanid@gmail.com   #"
-        Space(9); print "#    Team : Our Struggle Team   #"
+	Space(9); print "#   *** Admin Page Finder ***       #"
+	Space(9); print "#    Author : Dalpan                #"
+	Space(9); print "#    Email: dalpanid@gmail.com      #"
+        Space(9); print "#    Team : Our Struggle Team       #"
 	Space(9); print "#####################################"
+
+< OUR STRUGGLE TEAM >
+ -------------------
+    \
+     \
+                                   .::!!!!!!!:.
+  .!!!!!:.                        .:!!!!!!!!!!!!
+  ~~~~!!!!!!.                 .:!!!!!!!!!UWWW$$$ 
+      :$$NWX!!:           .:!!!!!!XUWW$$$$$$$$$P 
+      $$$$$##WX!:      .<!!!!UW$$$$"  $$$$$$$$# 
+      $$$$$  $$$UX   :!!UW$$$$$$$$$   4$$$$$* 
+      ^$$$B  $$$$\     $$$$$$$$$$$$   d$$R" 
+        "*$bd$$$$      '*$$$$$$$$$$$o+#" 
+             """"          """"""" 
+
+  ____    _    _     ____   _    _   _      ___ ____   
+ |  _ \  / \  | |   |  _ \ / \  | \ | |    |_ _|  _ \  
+ | | | |/ _ \ | |   | |_) / _ \ |  \| |_____| || | | | 
+ | |_| / ___ \| |___|  __/ ___ \| |\  |_____| || |_| | 
+ |____/_/   \_\_____|_| /_/   \_\_| \_|    |___|____/  
+                                                       
 
 Credit()
 findAdmin()
