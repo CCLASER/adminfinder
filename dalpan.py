@@ -19,7 +19,7 @@ print """\033[1;34m  ____    _    _     ____   _    _   _      ___ ____
 
                           \033[37mRecode with \033[91m<3\033[37m By Dalpan\033[1;m"""
 
-print """\n  Mohon bersabar jika gak ketenu gan.. 
+print """\n  Mohon bersabar jika gak ketemu gan.. 
              Ini Ujian.. saya juga manusia tidak ada yang sempurna :( \n"""
 print "\033[1;31m--------------------------------------------------------------------------\033[1;m\n"
 try:
