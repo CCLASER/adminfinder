@@ -9,13 +9,13 @@ import socket
 import sys
 
 try:
-    print "\t
+    
     print "\t ____    _    _     ____   _    _   _      ___ ____   "
     print "\t|  _ \  / \  | |   |  _ \ / \  | \ | |    |_ _|  _ \  "
     print "\t| | | |/ _ \ | |   | |_) / _ \ |  \| |_____| || | | | "
     print "\t| |_| / ___ \| |___|  __/ ___ \| |\  |_____| || |_| | "
     print "\t|____/_/   \_\_____|_| /_/   \_\_| \_|    |___|____/  "
-    print "\t                                                   
+    print "\t"                                                   
 
     print "\t Author : Dalpan     ( https://newbiengapak.com ) "
     print "\t My Team             ( http://ost-cyber.zone.id ) "
