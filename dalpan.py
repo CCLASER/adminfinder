@@ -15,7 +15,7 @@ try:
     print "\t| | | |/ _ \ | |   | |_) / _ \ |  \| |_____| || | | | "
     print "\t| |_| / ___ \| |___|  __/ ___ \| |\  |_____| || |_| | "
     print "\t|____/_/   \_\_____|_| /_/   \_\_| \_|    |___|____/  "
-    print "\t"                                                   
+    print "\t"                                                 
 
     print "\t Author : Dalpan     ( https://newbiengapak.com ) "
     print "\t My Team             ( http://ost-cyber.zone.id ) "
@@ -141,21 +141,21 @@ try:
       'adm/index.js', 'adm.js', 'affiliate.js', 'adm_auth.js', 'memberadmin.js', 'administratorlogin.js']
 
     try:
-        print ("Contoh : target.kalian.com")
-        site = raw_input("Website yang ingin di Scan? : ")
+        print ("Contoh : kamusuka.coli")
+        site = raw_input("Web targetmu cuk : ")
         site = site.replace("http://", "")
         print ("\tChecking website " + site + "...")
         conn = httplib.HTTPConnection(site)
         conn.connect()
         print "\tServer Online!!"
     except (httplib.HTTPResponse, socket.error) as Exit:
-        raw_input("\t [!] Maaf.. Server Offline atau URL Tidak Valid ")
+        raw_input("\t [!] Maaf.. Kalo nulis yang bener panteq ")
         exit()
-    print "Masukkan Sumber Kode Situs :"
+    print "Masukkan Sumber Kode cuk :"
     print "1 PHP"
     print "2 ASP"
     print "3 JS"
-    print "\nTekan angka dan ( Enter ) untuk scan tipe website\n"
+    print "\nTekan angka dan ( Enter ) untuk mulai scan oc\n"
     code = input("> ")
 
     if code == 1:
@@ -171,8 +171,8 @@ try:
             var2 = var2 + 1
             if response.status == 200:
                 var1 = var1 + 1
-                print "%s %s" % ("\n\n[+]" + host, "Halaman admin ditemukan!")
-                raw_input("Tekan Enter Untuk Melanjutkan Scan\n")
+                print "%s %s" % ("\n\n[+]" + host, "Ketemu cuk!")
+                raw_input("Pengin lanjut.. Tekan enter oc\n")
             elif response.status == 404:
                 var2 = var2
             elif response.status == 302:
@@ -181,9 +181,9 @@ try:
                 print "%s %s %s" % (host, " Interesting response:", response.status)
             connection.close()
         print("\n\nCompleted \n")
-        print var1, "Halaman admin yang ditemukan"
-        print var2, "Total Halaman Yang Di Scan"
-        raw_input("Selesai : Tekan Enter Untuk Keluar")
+        print var1, "Page admin yang ketemu cuk"
+        print var2, "Total page Yang Di Scan"
+        raw_input("Selesai : Tekan Enter Untuk out oc ")
 
     if code == 2:
         print("\t [+] Scanning " + site + "...\n\n")
@@ -198,8 +198,8 @@ try:
             var2 = var2 + 1
             if response.status == 200:
                 var1 = var1 + 1
-                print "%s %s" % ("\n\n[+]" + host, "Halaman admin ditemukan!")
-                raw_input("Tekan Enter Untuk Melanjutkan Scan\n")
+                print "%s %s" % ("\n\n[+]" + host, "Ketemu cuk!")
+                raw_input("Pengin lanjut.. Tekan enter oc\n")
             elif response.status == 404:
                 var2 = var2
             elif response.status == 302:
@@ -208,9 +208,9 @@ try:
                 print "%s %s %s" % (host, " Interesting response:", response.status)
             connection.close()
         print("\n\nCompleted \n")
-        print var1, "Halaman admin yang ditemukan"
-        print var2, "Total Halaman Yang Di Scan"
-        raw_input("Selesai : Tekan Enter Untuk Keluar")
+        print var1, "Page admin yang ketemu cuk"
+        print var2, "Total page Yang Di Scan"
+        raw_input("Selesai : Tekan Enter Untuk out oc ")
 
     if code == 3:
         print("\t [+] Scanning " + site + "...\n\n")
@@ -225,8 +225,8 @@ try:
             var2 = var2 + 1
             if response.status == 200:
                 var1 = var1 + 1
-                print "%s %s" % ("\n\n[+]" + host, "Halaman admin ditemukan!")
-                raw_input("Tekan Enter Untuk Melanjutkan Scan\n")
+                print "%s %s" % ("\n\n[+]" + host, "Ketemu cuk!")
+                raw_input("Pengin lanjut.. Tekan enter oc\n")
             elif response.status == 404:
                 var2 = var2
             elif response.status == 302:
@@ -235,11 +235,11 @@ try:
                 print "%s %s %s" % (host, " Interesting response:", response.status)
             connection.close()
         print("\n\nCompleted \n")
-        print var1, "Halaman admin yang ditemukan"
-        print var2, "Total Halaman Yang Di Scan"
-        raw_input("Selesai : Tekan Enter Untuk Keluar")
+        print var1, "Page admin yang ketemu cuk"
+        print var2, "Total page Yang Di Scan"
+        raw_input("Selesai : Tekan Enter Untuk out oc ")
 
 except (httplib.HTTPResponse, socket.error):
-    print "\n\t[!] Dibatalkan : Terjadi kesalahan. Periksa Pengaturan Internet"
+    print "\n\t[!] Dibatalkan : Terjadi kesalahan. Koneksilu periksa panteq"
 except (KeyboardInterrupt, SystemExit):
     print "\n\t[!] Dibatalkan"
