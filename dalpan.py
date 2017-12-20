@@ -1,107 +1,245 @@
-import requests #module for making request to a webpage
-import threading #module for multi-threading
-import argparse #module for parsing command line arguments
-parser = argparse.ArgumentParser() #defines the parser
-#Arguements that can be supplied
-parser.add_argument("-u", help="target url", dest='target')
-parser.add_argument("--path", help="custom path prefix", dest='prefix')
-parser.add_argument("--type", help="set the type i.e. html, asp, php", dest='type')
-parser.add_argument("--fast", help="uses multithreading", dest='fast', action="store_true")
-args = parser.parse_args() #arguments to be parsed
-target = args.target #Gets tarfet from argument
-#Fancy banner :p
-print """\033[1;34m  ____    _    _     ____   _    _   _      ___ ____   
- |  _ \  / \  | |   |  _ \ / \  | \ | |    |_ _|  _ \  
- | | | |/ _ \ | |   | |_) / _ \ |  \| |_____| || | | | 
- | |_| / ___ \| |___|  __/ ___ \| |\  |_____| || |_| | 
- |____/_/   \_\_____|_| /_/   \_\_| \_|    |___|____/  
-                                                       
+#----------------------------------------------
+# Tools Admin Page Finder
+# Follow me on Instagram : dalpan_id
+#----------------------------------------------
 
-                          \033[37mRecode with \033[91m<3\033[37m By Dalpan\033[1;m"""
 
-print """\n  Mohon bersabar jika gak ketemu gan.. 
-             Ini Ujian.. saya juga manusia tidak ada yang sempurna :( \n"""
-print "\033[1;31m--------------------------------------------------------------------------\033[1;m\n"
+import httplib
+import socket
+import sys
+
 try:
-	target = target.replace('https://', '') #Removes https://
-except:
-	print '\033[1;31m[-]\033[1;m -u untuk target. Enter python dalpan -h untuk bantuan'
-	quit()
-target = target.replace('http://', '') #and http:// from the url
-target = target.replace('/', '') #removes / from url so we can have example.com and not example.com/
-target = 'http://' + target #adds http:// before url so we have a perfect URL now
-if args.prefix != None:
-	target = target + args.prefix
-try:
-	r = requests.get(target + '/robots.txt') #Requests to example.com/robots.txt
-	if '<html>' in r.text: #if there's an html error page then its not robots.txt
-		print '  \033[1;31m[-]\033[1;m Robots.txt not found\n'
-	else: #else we got robots.txt
-		print '  \033[1;32m[+]\033[0m Robots.txt found. Check for any interesting entry\n'
-		print r.text
-except: #if this request fails, we are getting robots.txt
-	print '  \033[1;31m[-]\033[1;m Robots.txt not found\n'
-print "\033[1;31m--------------------------------------------------------------------------\033[1;m\n"
+    print "\t
+    print "\t ____    _    _     ____   _    _   _      ___ ____   "
+    print "\t|  _ \  / \  | |   |  _ \ / \  | \ | |    |_ _|  _ \  "
+    print "\t| | | |/ _ \ | |   | |_) / _ \ |  \| |_____| || | | | "
+    print "\t| |_| / ___ \| |___|  __/ ___ \| |\  |_____| || |_| | "
+    print "\t|____/_/   \_\_____|_| /_/   \_\_| \_|    |___|____/  "
+    print "\t                                                   
 
-def scan(links):
-	for link in links: #fetches one link from the links list
-		link = target + link # Does this--> example.com/admin/
-		r = requests.get(link) #Requests to the combined url
-		http = r.status_code #Fetches the http response code
-		if http == 200: #if its 200 the url points to valid resource i.e. admin panel
-			print '  \033[1;32m[+]\033[0m Admin panel found: %s'% link
-		elif http == 404: #404 means not found
-			print '  \033[1;31m[-]\033[1;m %s'% link
-		elif http == 302: #302 means redirection
-			print '  \033[1;32m[+]\033[0m Potential EAR vulnerability found : ' + link
-		else:
-			print '  \033[1;31m[-]\033[1;m %s'% link
-paths = [] #list of paths
-def get_paths(type):
+    print "\t Author : Dalpan     ( https://newbiengapak.com ) "
+    print "\t My Team             ( http://ost-cyber.zone.id ) "
+    print "\t"
+    var1 = 0
+    var2 = 0
+
+    php = ['admin/', 'administrator/', 'admin1/', 'admin2/', 'admin3/', 'admin4/', 'admin5/', 'usuarios/', 'usuario/',
+       'administrator/', 'moderator/', 'webadmin/', 'adminarea/', 'bb-admin/', 'adminLogin/', 'admin_area/',
+       'panel-administracion/', 'instadmin/',
+       'memberadmin/', 'administratorlogin/', 'adm/', 'admin/account.php', 'admin/index.php', 'admin/login.php',
+       'admin/admin.php', 'admin/account.php',
+       'admin_area/admin.php', 'admin_area/login.php', 'siteadmin/login.php', 'siteadmin/index.php',
+       'siteadmin/login.html', 'admin/account.html', 'admin/index.html', 'admin/login.html', 'admin/admin.html',
+       'admin_area/index.php', 'bb-admin/index.php', 'bb-admin/login.php', 'bb-admin/admin.php', 'admin/home.php',
+       'admin_area/login.html', 'admin_area/index.html',
+       'admin/controlpanel.php', 'admin.php', 'admincp/index.asp', 'admincp/login.asp', 'admincp/index.html',
+       'admin/account.html', 'adminpanel.html', 'webadmin.html',
+       'webadmin/index.html', 'webadmin/admin.html', 'webadmin/login.html', 'admin/admin_login.html',
+       'admin_login.html', 'panel-administracion/login.html',
+       'admin/cp.php', 'cp.php', 'administrator/index.php', 'administrator/login.php', 'nsw/admin/login.php',
+       'webadmin/login.php', 'admin/admin_login.php', 'admin_login.php',
+       'administrator/account.php', 'administrator.php', 'admin_area/admin.html', 'pages/admin/admin-login.php',
+       'admin/admin-login.php', 'admin-login.php',
+       'bb-admin/index.html', 'bb-admin/login.html', 'acceso.php', 'bb-admin/admin.html', 'admin/home.html',
+       'login.php', 'modelsearch/login.php', 'moderator.php', 'moderator/login.php',
+       'moderator/admin.php', 'account.php', 'pages/admin/admin-login.html', 'admin/admin-login.html',
+       'admin-login.html', 'controlpanel.php', 'admincontrol.php',
+       'admin/adminLogin.html', 'adminLogin.html', 'admin/adminLogin.html', 'home.html', 'rcjakar/admin/login.php',
+       'adminarea/index.html', 'adminarea/admin.html',
+       'webadmin.php', 'webadmin/index.php', 'webadmin/admin.php', 'admin/controlpanel.html', 'admin.html',
+       'admin/cp.html', 'cp.html', 'adminpanel.php', 'moderator.html',
+       'administrator/index.html', 'administrator/login.html', 'user.html', 'administrator/account.html',
+       'administrator.html', 'login.html', 'modelsearch/login.html',
+       'moderator/login.html', 'adminarea/login.html', 'panel-administracion/index.html',
+       'panel-administracion/admin.html', 'modelsearch/index.html', 'modelsearch/admin.html',
+       'admincontrol/login.html', 'adm/index.html', 'adm.html', 'moderator/admin.html', 'user.php', 'account.html',
+       'controlpanel.html', 'admincontrol.html',
+       'panel-administracion/login.php', 'wp-login.php', 'adminLogin.php', 'admin/adminLogin.php', 'home.php',
+       'admin.php', 'adminarea/index.php',
+       'adminarea/admin.php', 'adminarea/login.php', 'panel-administracion/index.php', 'panel-administracion/admin.php',
+       'modelsearch/index.php',
+       'modelsearch/admin.php', 'admincontrol/login.php', 'adm/admloginuser.php', 'admloginuser.php', 'admin2.php',
+       'admin2/login.php', 'admin2/index.php', 'usuarios/login.php',
+       'adm/index.php', 'adm.php', 'affiliate.php', 'adm_auth.php', 'memberadmin.php', 'administratorlogin.php']
+
+    asp = ['admin/', 'administrator/', 'admin1/', 'admin2/', 'admin3/', 'admin4/', 'admin5/', 'moderator/', 'webadmin/',
+       'adminarea/', 'bb-admin/', 'adminLogin/', 'admin_area/', 'panel-administracion/', 'instadmin/',
+       'memberadmin/', 'administratorlogin/', 'adm/', 'account.asp', 'admin/account.asp', 'admin/index.asp',
+       'admin/login.asp', 'admin/admin.asp',
+       'admin_area/admin.asp', 'admin_area/login.asp', 'admin/account.html', 'admin/index.html', 'admin/login.html',
+       'admin/admin.html',
+       'admin_area/admin.html', 'admin_area/login.html', 'admin_area/index.html', 'admin_area/index.asp',
+       'bb-admin/index.asp', 'bb-admin/login.asp', 'bb-admin/admin.asp',
+       'bb-admin/index.html', 'bb-admin/login.html', 'bb-admin/admin.html', 'admin/home.html',
+       'admin/controlpanel.html', 'admin.html', 'admin/cp.html', 'cp.html',
+       'administrator/index.html', 'administrator/login.html', 'administrator/account.html', 'administrator.html',
+       'login.html', 'modelsearch/login.html', 'moderator.html',
+       'moderator/login.html', 'moderator/admin.html', 'account.html', 'controlpanel.html', 'admincontrol.html',
+       'admin_login.html', 'panel-administracion/login.html',
+       'admin/home.asp', 'admin/controlpanel.asp', 'admin.asp', 'pages/admin/admin-login.asp', 'admin/admin-login.asp',
+       'admin-login.asp', 'admin/cp.asp', 'cp.asp',
+       'administrator/account.asp', 'administrator.asp', 'acceso.asp', 'login.asp', 'modelsearch/login.asp',
+       'moderator.asp', 'moderator/login.asp', 'administrator/login.asp',
+       'moderator/admin.asp', 'controlpanel.asp', 'admin/account.html', 'adminpanel.html', 'webadmin.html',
+       'pages/admin/admin-login.html', 'admin/admin-login.html',
+       'webadmin/index.html', 'webadmin/admin.html', 'webadmin/login.html', 'user.asp', 'user.html',
+       'admincp/index.asp', 'admincp/login.asp', 'admincp/index.html',
+       'admin/adminLogin.html', 'adminLogin.html', 'admin/adminLogin.html', 'home.html', 'adminarea/index.html',
+       'adminarea/admin.html', 'adminarea/login.html',
+       'panel-administracion/index.html', 'panel-administracion/admin.html', 'modelsearch/index.html',
+       'modelsearch/admin.html', 'admin/admin_login.html',
+       'admincontrol/login.html', 'adm/index.html', 'adm.html', 'admincontrol.asp', 'admin/account.asp',
+       'adminpanel.asp', 'webadmin.asp', 'webadmin/index.asp',
+       'webadmin/admin.asp', 'webadmin/login.asp', 'admin/admin_login.asp', 'admin_login.asp',
+       'panel-administracion/login.asp', 'adminLogin.asp',
+       'admin/adminLogin.asp', 'home.asp', 'admin.asp', 'adminarea/index.asp', 'adminarea/admin.asp',
+       'adminarea/login.asp', 'admin-login.html',
+       'panel-administracion/index.asp', 'panel-administracion/admin.asp', 'modelsearch/index.asp',
+       'modelsearch/admin.asp', 'administrator/index.asp',
+       'admincontrol/login.asp', 'adm/admloginuser.asp', 'admloginuser.asp', 'admin2.asp', 'admin2/login.asp',
+       'admin2/index.asp', 'adm/index.asp',
+       'adm.asp', 'affiliate.asp', 'adm_auth.asp', 'memberadmin.asp', 'administratorlogin.asp', 'siteadmin/login.asp',
+       'siteadmin/index.asp', 'siteadmin/login.html']
+
+    js = ['admin/', 'administrator/', 'admin1/', 'admin2/', 'admin3/', 'admin4/', 'admin5/', 'usuarios/', 'usuario/',
+      'administrator/', 'moderator/', 'webadmin/', 'adminarea/', 'bb-admin/', 'adminLogin/', 'admin_area/',
+      'panel-administracion/', 'instadmin/',
+      'memberadmin/', 'administratorlogin/', 'adm/', 'admin/account.js', 'admin/index.js', 'admin/login.js',
+      'admin/admin.js', 'admin/account.js',
+      'admin_area/admin.js', 'admin_area/login.js', 'siteadmin/login.js', 'siteadmin/index.js', 'siteadmin/login.html',
+      'admin/account.html', 'admin/index.html', 'admin/login.html', 'admin/admin.html',
+      'admin_area/index.js', 'bb-admin/index.js', 'bb-admin/login.js', 'bb-admin/admin.js', 'admin/home.js',
+      'admin_area/login.html', 'admin_area/index.html',
+      'admin/controlpanel.js', 'admin.js', 'admincp/index.asp', 'admincp/login.asp', 'admincp/index.html',
+      'admin/account.html', 'adminpanel.html', 'webadmin.html',
+      'webadmin/index.html', 'webadmin/admin.html', 'webadmin/login.html', 'admin/admin_login.html', 'admin_login.html',
+      'panel-administracion/login.html',
+      'admin/cp.js', 'cp.js', 'administrator/index.js', 'administrator/login.js', 'nsw/admin/login.js',
+      'webadmin/login.js', 'admin/admin_login.js', 'admin_login.js',
+      'administrator/account.js', 'administrator.js', 'admin_area/admin.html', 'pages/admin/admin-login.js',
+      'admin/admin-login.js', 'admin-login.js',
+      'bb-admin/index.html', 'bb-admin/login.html', 'bb-admin/admin.html', 'admin/home.html', 'login.js',
+      'modelsearch/login.js', 'moderator.js', 'moderator/login.js',
+      'moderator/admin.js', 'account.js', 'pages/admin/admin-login.html', 'admin/admin-login.html', 'admin-login.html',
+      'controlpanel.js', 'admincontrol.js',
+      'admin/adminLogin.html', 'adminLogin.html', 'admin/adminLogin.html', 'home.html', 'rcjakar/admin/login.js',
+      'adminarea/index.html', 'adminarea/admin.html',
+      'webadmin.js', 'webadmin/index.js', 'acceso.js', 'webadmin/admin.js', 'admin/controlpanel.html', 'admin.html',
+      'admin/cp.html', 'cp.html', 'adminpanel.js', 'moderator.html',
+      'administrator/index.html', 'administrator/login.html', 'user.html', 'administrator/account.html',
+      'administrator.html', 'login.html', 'modelsearch/login.html',
+      'moderator/login.html', 'adminarea/login.html', 'panel-administracion/index.html',
+      'panel-administracion/admin.html', 'modelsearch/index.html', 'modelsearch/admin.html',
+      'admincontrol/login.html', 'adm/index.html', 'adm.html', 'moderator/admin.html', 'user.js', 'account.html',
+      'controlpanel.html', 'admincontrol.html',
+      'panel-administracion/login.js', 'wp-login.js', 'adminLogin.js', 'admin/adminLogin.js', 'home.js', 'admin.js',
+      'adminarea/index.js',
+      'adminarea/admin.js', 'adminarea/login.js', 'panel-administracion/index.js', 'panel-administracion/admin.js',
+      'modelsearch/index.js',
+      'modelsearch/admin.js', 'admincontrol/login.js', 'adm/admloginuser.js', 'admloginuser.js', 'admin2.js',
+      'admin2/login.js', 'admin2/index.js', 'usuarios/login.js',
+      'adm/index.js', 'adm.js', 'affiliate.js', 'adm_auth.js', 'memberadmin.js', 'administratorlogin.js']
+
     try:
-        with open('paths.txt','r') as wordlist: #opens paths.txt and grabs links according to the type arguemnt
-            for path in wordlist: #too boring to describe
-                path = str(path.replace("\n",""))
-                try:
-            		if 'asp' in type:
-            			if 'html' in path or 'php' in path:
-            				pass
-                		else:
-               	 			paths.append(path)
-                	if 'php' in type:
-                		if 'asp' in path or 'html' in path:
-                			pass
-                		else:
-                			paths.append(path)
-                	if 'html' in type:
-                		if 'asp' in path or 'php' in path:
-                			pass
-                		else:
-                			paths.append(path)
-                except:
-                	paths.append(path)
-    except IOError:
-        print"\033[1;31m[-]\033[1;m Wordlist not found!"
-        quit()
-if args.fast == True: #if the user has supplied --fast argument
-	type = args.type #gets the input from --type argument
-	get_paths(type) #tells the link grabber to grab links according to user input like php, html, asp
-	paths1 = paths[:len(paths)/2] #The path/links list gets
-	paths2 = paths[len(paths)/2:] #divided into two lists
-	def part1():
-		links = paths1 #it is the first part of the list
-		scan(links) #calls the scanner
-	def part2():
-		links = paths2 #it is the second part of the list
-		scan(links) #calls the scanner
-	t1 = threading.Thread(target=part1) #Calls the part1 function via a thread
-	t2 = threading.Thread(target=part2) #Calls the part2 function via a thread
-	t1.start() #starts thread 1
-	t2.start() #starts thread 2
-	t1.join() #Joins both
-	t2.join() #of the threads
-else: #if --fast isn't supplied we go without threads
-	type = args.type
-	get_paths(type)
-	links = paths
-	scan(links)
+        print ("Contoh : target.kalian.com")
+        site = raw_input("Website yang ingin di Scan? : ")
+        site = site.replace("http://", "")
+        print ("\tChecking website " + site + "...")
+        conn = httplib.HTTPConnection(site)
+        conn.connect()
+        print "\tServer Online!!"
+    except (httplib.HTTPResponse, socket.error) as Exit:
+        raw_input("\t [!] Maaf.. Server Offline atau URL Tidak Valid ")
+        exit()
+    print "Masukkan Sumber Kode Situs :"
+    print "1 PHP"
+    print "2 ASP"
+    print "3 JS"
+    print "\nTekan angka dan ( Enter ) untuk scan tipe website\n"
+    code = input("> ")
+
+    if code == 1:
+        print("\t [+] Scanning " + site + "...\n\n")
+        for admin in php:
+            admin = admin.replace("\n", "")
+            admin = "/" + admin
+            host = site + admin
+            print ("\t [#] Checking " + host + "...")
+            connection = httplib.HTTPConnection(site)
+            connection.request("GET", admin)
+            response = connection.getresponse()
+            var2 = var2 + 1
+            if response.status == 200:
+                var1 = var1 + 1
+                print "%s %s" % ("\n\n[+]" + host, "Halaman admin ditemukan!")
+                raw_input("Tekan Enter Untuk Melanjutkan Scan\n")
+            elif response.status == 404:
+                var2 = var2
+            elif response.status == 302:
+                print "%s %s" % ("\n>>>" + host, "Possible admin page (302 - Redirect)")
+            else:
+                print "%s %s %s" % (host, " Interesting response:", response.status)
+            connection.close()
+        print("\n\nCompleted \n")
+        print var1, "Halaman admin yang ditemukan"
+        print var2, "Total Halaman Yang Di Scan"
+        raw_input("Selesai : Tekan Enter Untuk Keluar")
+
+    if code == 2:
+        print("\t [+] Scanning " + site + "...\n\n")
+        for admin in asp:
+            admin = admin.replace("\n", "")
+            admin = "/" + admin
+            host = site + admin
+            print ("\t [#] Checking " + host + "...")
+            connection = httplib.HTTPConnection(site)
+            connection.request("GET", admin)
+            response = connection.getresponse()
+            var2 = var2 + 1
+            if response.status == 200:
+                var1 = var1 + 1
+                print "%s %s" % ("\n\n[+]" + host, "Halaman admin ditemukan!")
+                raw_input("Tekan Enter Untuk Melanjutkan Scan\n")
+            elif response.status == 404:
+                var2 = var2
+            elif response.status == 302:
+                print "%s %s" % ("\n>>>" + host, "Possible admin page (302 - Redirect)")
+            else:
+                print "%s %s %s" % (host, " Interesting response:", response.status)
+            connection.close()
+        print("\n\nCompleted \n")
+        print var1, "Halaman admin yang ditemukan"
+        print var2, "Total Halaman Yang Di Scan"
+        raw_input("Selesai : Tekan Enter Untuk Keluar")
+
+    if code == 3:
+        print("\t [+] Scanning " + site + "...\n\n")
+        for admin in js:
+            admin = admin.replace("\n", "")
+            admin = "/" + admin
+            host = site + admin
+            print ("\t [#] Checking " + host + "...")
+            connection = httplib.HTTPConnection(site)
+            connection.request("GET", admin)
+            response = connection.getresponse()
+            var2 = var2 + 1
+            if response.status == 200:
+                var1 = var1 + 1
+                print "%s %s" % ("\n\n[+]" + host, "Halaman admin ditemukan!")
+                raw_input("Tekan Enter Untuk Melanjutkan Scan\n")
+            elif response.status == 404:
+                var2 = var2
+            elif response.status == 302:
+                print "%s %s" % ("\n>>>" + host, "Possible admin page (302 - Redirect)")
+            else:
+                print "%s %s %s" % (host, " Interesting response:", response.status)
+            connection.close()
+        print("\n\nCompleted \n")
+        print var1, "Halaman admin yang ditemukan"
+        print var2, "Total Halaman Yang Di Scan"
+        raw_input("Selesai : Tekan Enter Untuk Keluar")
+
+except (httplib.HTTPResponse, socket.error):
+    print "\n\t[!] Dibatalkan : Terjadi kesalahan. Periksa Pengaturan Internet"
+except (KeyboardInterrupt, SystemExit):
+    print "\n\t[!] Dibatalkan"
